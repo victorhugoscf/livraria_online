@@ -1,5 +1,7 @@
 README - Sistema de Gerenciamento de Livros com Laravel
 
+![Foto demonstrativa do projeto](livraria.png)
+
 Este é um sistema de gerenciamento de livros desenvolvido para um trabalho acadêmico, utilizando Laravel 11, Bootstrap 5, jQuery e MySQL. Ele permite cadastrar, listar, editar, visualizar e excluir livros, com interface responsiva e modais para interação.
 
 Objetivo
@@ -55,6 +57,10 @@ Instalação
     Execute as migrações para criar a tabela books:
 
     php artisan migrate
+
+    Popule o banco de dados com o seeders:
+
+    php artisan db:seed
 
     Inicie o servidor Laravel:
 
