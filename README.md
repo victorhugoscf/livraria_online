@@ -1,61 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+README - Sistema de Gerenciamento de Livros com Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um sistema de gerenciamento de livros desenvolvido para um trabalho acadêmico, utilizando Laravel 11, Bootstrap 5, jQuery e MySQL. Ele permite cadastrar, listar, editar, visualizar e excluir livros, com interface responsiva e modais para interação.
 
-## About Laravel
+Objetivo
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Gerenciar informações de livros (ISBN, título, autor, editora, ano de publicação, gênero, idioma, páginas, exemplares totais/disponíveis, status) em uma interface amigável, com listagem, busca e paginação.
+Tecnologias
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    Laravel 11: Framework PHP para backend.
+    Bootstrap 5: Interface frontend responsiva.
+    jQuery: Manipulação de DOM e AJAX.
+    MySQL: Banco de dados relacional.
+    Blade: Templates do Laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Estrutura do Projeto
 
-## Learning Laravel
+    app/Http/Controllers/BookController.php: Controla ações como listar, criar, editar, excluir e buscar livros.
+    app/Models/Book.php: Modelo Eloquent para a tabela books.
+    database/migrations/: Define a tabela books com campos como ISBN, título, etc.
+    resources/views/layouts/app.blade.php: Layout principal com imports de Bootstrap, jQuery, menu superior e rodapé.
+    resources/views/books/index.blade.php: Lista livros com tabela, busca e botões para modais.
+    resources/views/partials/modals/: Contém modais de criação, edição e visualização.
+    routes/web.php: Define rotas do sistema.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Rotas
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    GET /books: Lista livros.
+    GET /books/create: Formulário de criação (opcional, via modal).
+    POST /books: Salva novo livro.
+    GET /books/{id}/json: Retorna dados do livro em JSON.
+    GET /books/{id}/edit: Formulário de edição (opcional, via modal).
+    PUT/PATCH /books/{id}: Atualiza livro.
+    DELETE /books/{id}: Exclui livro.
+    GET /books/search: Busca livros.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Instalação
 
-## Laravel Sponsors
+    Clone o repositório:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    git clone https://github.com/victorhugoscf/livraria_online
+    cd livraria_online
 
-### Premium Partners
+    Instale as dependências com o Composer:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+    composer install
 
-## Contributing
+    Copie o arquivo .env e configure o banco de dados:
+    cp .env.example .env
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Gere a chave da aplicação:
 
-## Code of Conduct
+    php artisan key:generate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    Execute as migrações para criar a tabela books:
 
-## Security Vulnerabilities
+    php artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    Inicie o servidor Laravel:
 
-## License
+    php artisan serve
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    Acesse a aplicação:
+
+    http://localhost:8000/books
+    
+Funcionalidades
+
+    Listagem: Exibe livros em tabela com paginação e busca.
+    Criação: Modal com formulário para adicionar livro (POST para books.store).
+    Edição: Modal para editar livro, preenchido via AJAX (books.showJson, PATCH para books.update).
+    Visualização: Modal com detalhes do livro (somente leitura, via AJAX).
+    Exclusão: Remove livro com confirmação (DELETE para books.destroy).
+    Busca: Filtra livros por título, autor, etc.
+
+Estilização
+
+    Usa Bootstrap 5 para layout responsivo.
+    Modais estilizados com fundo branco e bordas pretas, botões em preto/branco.
+    Arquivos de modais em partials/modals (criação, edição, visualização), incluídos no index.blade.php.
+
