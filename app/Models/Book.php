@@ -25,7 +25,11 @@ class Book extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
+        'is_active'        => 'boolean',
+        'publication_year' => 'integer',
+        'pages'            => 'integer',
+        'total_copies'     => 'integer',
+        'available_copies' => 'integer',
     ];
 
     // Relacionamentos

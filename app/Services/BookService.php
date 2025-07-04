@@ -71,8 +71,10 @@ class BookService
     {
         try {
             $book = $this->bookModel->create($data);
+
             return $book;
-        } catch (Exception $e) {
+        } catch (Exception $e) 
+        {
             // Você pode logar o erro aqui: Log::error($e->getMessage());
             throw new Exception("Erro ao criar o livro: " . $e->getMessage());
         }
@@ -89,10 +91,27 @@ class BookService
     public function updateBook(Book $book, array $data): bool
     {
         try {
-            return $book->update($data);
-        } catch (Exception $e) {
-            // Você pode logar o erro aqui: Log::error($e->getMessage());
-            throw new Exception("Erro ao atualizar o livro: " . $e->getMessage());
+            // Atualizar apenas os campos fornecidos em $data
+            foreach ($data as $key => $value) 
+            {
+                if ($value !== null) 
+                { // Ignorar valores nulos, exceto para is_active
+                    $book->$key = $value;
+                }
+            }
+
+            // Garantir que is_active seja tratado corretamente
+            $book->is_active = isset($data['is_active']) ? (bool) $data['is_active'] : $book->is_active;
+
+            // Salvar as alterações no banco de dados
+            return $book->save();
+        } catch (\Exception $e) 
+        {
+            \Log::error('Erro ao atualizar livro no BookService: ' . $e->getMessage(), [
+                'book_id' => $book->id,
+                'data'    => $data
+            ]);
+            return false;
         }
     }
 
@@ -107,7 +126,8 @@ class BookService
     {
         try {
             return $book->delete();
-        } catch (Exception $e) {
+        } catch (Exception $e) 
+        {
             // Você pode logar o erro aqui: Log::error($e->getMessage());
             throw new Exception("Erro ao deletar o livro: " . $e->getMessage());
         }
@@ -117,7 +137,8 @@ class BookService
     {
         $query = $this->bookModel->query();
 
-        if ($keyword) {
+        if ($keyword) 
+        {
             $query->where(function ($q) use ($keyword) {
                 $q->where('title', 'like', '%' . $keyword . '%')
                   ->orWhere('author', 'like', '%' . $keyword . '%')
